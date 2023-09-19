@@ -1,0 +1,33 @@
+# encryption ciphers
+ciphers:
+  approved: []
+  contained: []
+  qualys_approved: []
+# message integrity
+mac:
+  approved:
+    - buh
+  contained: []
+  qualys_approved: []
+# SSH Key establishment, Key exchange
+kex:
+  approved:
+    - curve25519-sha256@libssh.org
+    - diffie-hellman-group-exchange-sha256
+  contained: [ ]
+  qualys_approved: []
+# Signature Algorithms (Host Key Algorithm)
+hka:
+  approved:
+    - ssh-ed25519
+  contained:
+    - ssh-rsa
+    - rsa-sha2-512
+    - rsa-sha2-256
+  qualys_approved: []
+# SSH Key formats
+key_format:
+  approved:
+    - ssh-ed25519
+  contained: [ ]
+  qualys_approved: []
