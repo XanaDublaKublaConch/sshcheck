@@ -65,10 +65,16 @@ def main(
         show_header=True,
         header_style='bold blue',
         title=f'Results for {svr.hostname}:{svr.port} ({svr.ip_address})',
-        caption=f'Server sent us a host key in {svr.server_key_str} format.',
+        caption=f'Server sent us a host key in {svr.server_key_str} format',
         show_lines=True,
-        title_style="bold white on deep sky blue2"
+        title_style="bold white on deep_sky_blue2"
     )
+    table.add_column("Type", style="dim")
+    table.add_column("Policy: Approved")
+    table.add_column("Policy: Contained")
+    table.add_column("Policy: Override")
+    table.add_column("Policy: BAD!")
+
     # Add the security findings foe each type
     for key in ['kex', 'hka', 'ciphers', 'mac']:
         err_dict: dict[str, set] = {f'Error {key}': {'No data found'}}
