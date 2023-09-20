@@ -1,3 +1,6 @@
+import tempfile
+from pathlib import Path
+
 from typing_extensions import Annotated
 
 # Dependency imports
@@ -42,6 +45,14 @@ def main(
         html_export: Annotated[bool, typer.Option(
             "--html-export",
             help="Export to HTML?"
+        )] = False,
+        pdf_export: Annotated[bool, typer.Option(
+            "--pdf-export",
+            help="Export to PDF?"
+        )] = False,
+        png_export: Annotated[bool, typer.Option(
+            "--png-export",
+            help="Export to PNG?"
         )] = False
 ):
     """
@@ -50,6 +61,8 @@ def main(
     :param port: listening port of the ssh server
     :param svg_export: export to svg
     :param html_export: export to html
+    :param pdf_export: export to pdf
+    :param png_export: export to png
     :return:
     """
     # Load in the policy
@@ -103,7 +116,26 @@ def main(
         filename = f'{svr.hostname}.html'
         console.save_html(filename, theme=DIMMED_MONOKAI)
         console.print(f'[dim cyan]HTML report saved as {filename}[/dim cyan]')
-    # TODO: install cairosvg to export png of the svg
+    if pdf_export:
+        try:
+            import cairosvg
+            filename = f'{svr.hostname}.pdf'
+            console.save_svg('temp.svg')
+            cairosvg.svg2pdf(url='temp.svg', write_to=filename)
+            Path('temp.svg').unlink()
+        except ModuleNotFoundError:
+            console.print('[bold red]cairosvg module must be installed to export PDF!')
+        console.print(f'[dim cyan]PDF file saved to {filename}[/dim cyan]')
+    if png_export:
+        try:
+            import cairosvg
+            filename = f'{svr.hostname}.png'
+            console.save_svg('temp.svg')
+            cairosvg.svg2png(url='temp.svg', write_to=filename)
+            Path('temp.svg').unlink()
+        except ModuleNotFoundError:
+            console.print('[bold red]cairosvg module must be installed to export PNG!')
+        console.print(f'[dim cyan]PNG file saved to {filename}[/dim cyan]')
 
 
 def run_cli():
