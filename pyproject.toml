@@ -9,6 +9,7 @@ authors = [
 ]
 description = "A small utility for checking ssh hosts against a YAML Key Exchange security policy"
 readme = "README.md"
+license = "MIT"
 requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -21,7 +22,6 @@ dependencies = [
     'paramiko', 'typer[all]', 'pyyaml',
     'importlib-metadata; python_version<"3.8"'
 ]
-
 [project.scripts]
 sshcheck = "sshcheck.cli:run_cli"
 
