@@ -4,6 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sshcheck"
+version = "0.0.6"
 authors = [
     {name="Johnny Birchett", email="lol@ok.wutevs"},
 ]
@@ -17,7 +18,6 @@ classifiers = [
     "Operating System :: OS Independent",
     "Development Status :: 4 - Beta"
 ]
-version = "0.0.5"
 dependencies = [
     'paramiko', 'typer[all]', 'pyyaml',
     'importlib-metadata; python_version<"3.8"'
