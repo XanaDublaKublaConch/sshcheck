@@ -9,8 +9,8 @@ authors = [
 ]
 description = "A small utility for checking ssh hosts against a YAML Key Exchange security policy"
 readme = "README.md"
-license = "MIT"
-requires-python = ">=3.8"
+license = {file = "LICENSE"}
+requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
@@ -22,6 +22,15 @@ dependencies = [
     'paramiko', 'typer[all]', 'pyyaml',
     'importlib-metadata; python_version<"3.8"'
 ]
+keywords = ['ssh', 'kex', 'configuration']
+
+[project.optional-dependencies]
+img = ['cairosvg']
+
+[project.urls]
+Homepage = "https://github.com/XanaDublaKublaConch/sshcheck"
+Repository = "https://github.com/XanaDublaKublaConch/sshcheck"
+
 [project.scripts]
 sshcheck = "sshcheck.cli:run_cli"
 
