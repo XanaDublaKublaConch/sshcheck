@@ -27,6 +27,9 @@ keywords = ['ssh', 'kex', 'configuration']
 [project.optional-dependencies]
 img = ['cairosvg']
 
+
+
+
 [project.urls]
 Homepage = "https://github.com/XanaDublaKublaConch/sshcheck"
 Repository = "https://github.com/XanaDublaKublaConch/sshcheck"

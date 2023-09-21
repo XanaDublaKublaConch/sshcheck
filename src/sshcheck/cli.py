@@ -30,6 +30,7 @@ def format_set(the_set: set, color="green") -> str:
 
 
 def main(
+
     host: Annotated[str, typer.Argument(help="Hostname or IP address")],
     port: Annotated[
         int, typer.Option(help="Listening port for sshd service", min=1, max=65535)
@@ -119,6 +120,7 @@ def main(
     if html_export:
         filename = f"{svr.hostname}.html"
         console.save_html(filename, theme=DIMMED_MONOKAI)
+
         console.print(f"[dim cyan]HTML report saved as {filename}[/dim cyan]")
     if pdf_export:
         try:
