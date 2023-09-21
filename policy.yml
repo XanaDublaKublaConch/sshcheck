@@ -26,7 +26,8 @@ kex:
     - curve25519-sha256@libssh.org
     - diffie-hellman-group-exchange-sha256
   contained: [ ]
-  policy_overrides: []
+  policy_overrides:
+    - ecdh-sha2-nistp256
 # Signature Algorithms (Host Key Algorithm)
 hka:
   approved:
