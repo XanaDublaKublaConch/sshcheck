@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from paramiko.ssh_exception import SSHException
 from typing_extensions import Annotated
 
 # Dependency imports
@@ -13,6 +14,7 @@ from yaml import safe_load
 
 # Local imports
 from .api import CheckedServer, PolicyStatus
+from .exceptions import InvalidTargetException
 
 
 def format_set(the_set: set, color="green") -> str:
@@ -58,12 +60,24 @@ def main(
     :param png_export: export to png
     :return:
     """
+    console = Console(record=True)
+
     # Load in the policy
     with open("policy.yml", "r") as policy_file:
         ssh_policy = safe_load(policy_file)
+
     # Checkit
-    svr = CheckedServer(hostname=host, port=port, policy=ssh_policy)
-    svr.check_ssh()
+    try:
+        svr = CheckedServer(hostname=host, port=port, policy=ssh_policy)
+    except InvalidTargetException as e:
+        console.print(e, style="bold red")
+        raise typer.Exit()
+
+    try:
+        svr.check_ssh()
+    except SSHException as e:
+        console.print(e, style="bold red")
+        raise typer.Exit()
 
     match svr.host_key_status:
         case PolicyStatus.APPROVED:
@@ -78,7 +92,6 @@ def main(
             color = "lightslategrey"
 
     # record = True allows rich to export captured prints to svg, html, etc.
-    console = Console(record=True)
     table = Table(
         show_header=True,
         header_style="bold blue",

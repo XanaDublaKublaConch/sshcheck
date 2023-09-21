@@ -5,9 +5,11 @@ from __future__ import annotations
 import re
 import socket
 from enum import Enum, auto
+from ipaddress import ip_address
 
 # Dependency imports
 from paramiko import Transport
+from .exceptions import InvalidTargetException
 
 # Default socket timeout is way too long for this
 socket.setdefaulttimeout(3)
@@ -73,13 +75,17 @@ class CheckedServer:
     def resolve_address(self):
         if re.match(r"[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}", self.ip_address):
             # User provided an ip address, so get the hostname and set it
+            try:
+                _ = ip_address(self.ip_address)
+            except ValueError as e:
+                raise InvalidTargetException(e)
             self.hostname = dns_ptr_lookup(self.ip_address)[0] or "No DNS"
         else:
             # The user provided a hostname, so get the ip and set it
             try:
                 self.ip_address = socket.gethostbyname(self.hostname)
             except socket.gaierror:
-                self.ip_address = "Lookup failed"
+                raise InvalidTargetException(f"DNS lookup failed for {self.hostname}.")
 
     def check_ssh(self):
         """
