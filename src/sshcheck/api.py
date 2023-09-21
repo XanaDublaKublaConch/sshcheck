@@ -17,9 +17,9 @@ socket.setdefaulttimeout(3)
 
 class PolicyStatus(Enum):
     APPROVED = auto
-    UNAPPROVED = auto
+    BAD = auto
     CONTAINED = auto
-    OTHER = auto
+    POLICY_OVERRIDES = auto
 
 
 class SshCheck(Transport):
@@ -108,7 +108,7 @@ class CheckedServer:
             config_attr["approved"] = set(server_attr).intersection(
                 self.policy[idx]["approved"]
             ) or {"None"}
-            # Everything else, used for getting contained, bad, unknown
+            # Everything else, used for getting contained, bad, unknown, not useful for output
             config_attr["unapproved"] = set(server_attr) - set(
                 self.policy[idx]["approved"]
             ) or {"None"}
@@ -118,13 +118,13 @@ class CheckedServer:
             ) or {"None"}
             # Stuff that that's outside your official policy, but can't/won't be fixed
             # e.g. chacha20-poly1305@openssh.com in some orgs
-            config_attr["unknown"] = config_attr["unapproved"].intersection(
+            config_attr["policy_overrides"] = config_attr["unapproved"].intersection(
                 self.policy[idx]["policy_overrides"]
             ) or {"None"}
             # Known bad stuff
             config_attr["bad"] = config_attr["unapproved"] - config_attr[
                 "contained"
-            ] - config_attr["unknown"] or {"None"}
+            ] - config_attr["policy_overrides"] or {"None"}
 
         # What kind of key did the server send us after negotiations?
         if self.host_key_type in self.policy["key_format"]["approved"]:
@@ -132,9 +132,9 @@ class CheckedServer:
         elif self.host_key_type in self.policy["key_format"]["contained"]:
             self.host_key_status = PolicyStatus.CONTAINED
         elif self.host_key_type in self.policy["key_format"]["policy_overrides"]:
-            self.host_key_status = PolicyStatus.OTHER
+            self.host_key_status = PolicyStatus.POLICY_OVERRIDES
         else:
-            self.host_key_status = PolicyStatus.UNAPPROVED
+            self.host_key_status = PolicyStatus.BAD
 
         # Clean up the connection
         t.close()

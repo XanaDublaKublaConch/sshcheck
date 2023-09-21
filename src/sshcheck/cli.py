@@ -84,9 +84,9 @@ def main(
             color = "green"
         case PolicyStatus.CONTAINED:
             color = "red"
-        case PolicyStatus.OTHER:
+        case PolicyStatus.POLICY_OVERRIDES:
             color = "yellow"
-        case PolicyStatus.UNAPPROVED:
+        case PolicyStatus.BAD:
             color = "red"
         case _:  # Could be None?
             color = "lightslategrey"
@@ -114,7 +114,7 @@ def main(
             key.upper(),
             format_set(result_dict.get("approved")),
             format_set(result_dict.get("contained"), "red"),
-            format_set(result_dict.get("unknown"), "yellow"),
+            format_set(result_dict.get("policy_overrides"), "yellow"),
             format_set(result_dict.get("bad"), "red"),
         )
     # Add the compression stuff. Rich tables don't support colspan, so fill with spaces
