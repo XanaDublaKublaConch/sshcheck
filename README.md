@@ -82,9 +82,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![](/home/johnny/PycharmProjects/sshcheck/images/product-snapshot.png)](https://example.com)
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `XanaDublaKublaConch`, `sshcheck`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `SSHCheck`, `A small utility for checking ssh hosts against a YAML Key Exchange security policy`
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
