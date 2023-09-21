@@ -8,7 +8,7 @@ ciphers:
     - aes128-gcm@openssh.com
     - aes128-ctr
   contained: []
-  qualys_approved: []
+  policy_overrides: []
 # message integrity
 mac:
   approved:
@@ -19,14 +19,14 @@ mac:
     - hmac-sha2-256-etm@openssh.com
     - hmac-sha2-256
   contained: []
-  qualys_approved: []
+  policy_overrides: []
 # SSH Key establishment, Key exchange
 kex:
   approved:
     - curve25519-sha256@libssh.org
     - diffie-hellman-group-exchange-sha256
   contained: [ ]
-  qualys_approved: []
+  policy_overrides: []
 # Signature Algorithms (Host Key Algorithm)
 hka:
   approved:
@@ -35,10 +35,10 @@ hka:
     - ssh-rsa
     - rsa-sha2-512
     - rsa-sha2-256
-  qualys_approved: []
+  policy_overrides: []
 # SSH Key formats
 key_format:
   approved:
     - ssh-ed25519
   contained: [ ]
-  qualys_approved: []
+  policy_overrides: []
